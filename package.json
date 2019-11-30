@@ -10,7 +10,10 @@
     "build": "npm run -C ./server build && npm run -C ./client build",
     "dev": "concurrently \"npm run -C ./server dev\" \"npm run -C ./client dev\"",
     "start": "node ./server/dist/src/server.js",
-    "install:all": "cd server"
+    "install:all": "cd server",
+    "launchdb": "docker-compose -f ./docker-compose.dbonly.yml up -d",
+    "launchdb:attached": "docker-compose -f ./docker-compose.dbonly.yml up",
+    "devdb": "docker exec -it rss_postgres psql rss -U rss"
   },
   "repository": {
     "type": "git",
