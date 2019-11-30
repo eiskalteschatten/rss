@@ -1,12 +1,11 @@
 import { Router, Request, Response } from 'express';
 
 import { returnError } from '../../lib/apiErrorHandling';
-
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
-import { refreshAllFeeds } from '../../services/feedsService';
+import { refreshAllFeeds, refreshForSingleFeed } from '../../services/feedsService';
 
-class FeedsController implements Controller {
+class RefreshController implements Controller {
   router: Router;
 
   constructor(router: Router) {
@@ -15,7 +14,8 @@ class FeedsController implements Controller {
   }
 
   private initilizeRoutes(): void {
-    this.router.post('/refresh', this.refreshAllFeeds);
+    this.router.post('/', this.refreshAllFeeds);
+    this.router.post('/:feedId', this.refreshSingleFeed);
   }
 
   private async refreshAllFeeds(req: Request, res: Response): Promise<void> {
@@ -27,8 +27,19 @@ class FeedsController implements Controller {
       returnError(error as HttpError, res);
     }
   }
+
+  private async refreshSingleFeed(req: Request, res: Response): Promise<void> {
+    try {
+      const feedId = parseInt(req.params.feedId);
+      const articles = await refreshForSingleFeed(feedId);
+      res.json({ articles });
+    }
+    catch(error) {
+      returnError(error as HttpError, res);
+    }
+  }
 }
 
 export default (router: Router): void => {
-  new FeedsController(router);
+  new RefreshController(router);
 };
