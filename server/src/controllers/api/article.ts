@@ -27,7 +27,9 @@ class ArticleController implements Controller {
   private async getAllArticles(req: Request, res: Response): Promise<void> {
     try {
       const articles = await Article.findAll({
-        order: '"updatedAt" DESC'
+        order: [
+          ['updatedAt', 'DESC']
+        ]
       });
 
       res.json({ articles });
