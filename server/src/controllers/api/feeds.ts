@@ -20,7 +20,7 @@ class FeedsController implements Controller {
 
   private async refreshAllFeeds(req: Request, res: Response): Promise<void> {
     try {
-
+      // temporary filler for the linter
     }
     catch(error) {
       returnError(error as HttpError, res);
