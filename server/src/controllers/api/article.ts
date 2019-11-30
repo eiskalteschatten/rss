@@ -45,7 +45,9 @@ class ArticleController implements Controller {
         where: {
           markedAsRead: false
         },
-        order: '"updatedAt" DESC'
+        order: [
+          ['updatedAt', 'DESC']
+        ]
       });
 
       res.json({ articles });
