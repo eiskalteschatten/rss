@@ -10,6 +10,7 @@ export class Feed extends Model implements FeedInferface {
   name: string;
   feedUrl: string;
   link: string;
+  icon: string;
   fkFolder: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
@@ -27,6 +28,10 @@ Feed.init({
   link: {
     type: DataTypes.STRING,
     field: 'link'
+  },
+  icon: {
+    type: DataTypes.STRING,
+    field: 'icon'
   },
   fkFolder: {
     type: DataTypes.INTEGER,

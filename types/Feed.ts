@@ -3,6 +3,7 @@ export default interface Feed {
   name: string;
   feedUrl: string;
   link: string;
+  icon: string;
   fkFolder: number;
   createdAt: Date;
   updatedAt: Date;
