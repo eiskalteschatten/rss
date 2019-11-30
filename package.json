@@ -1,0 +1,38 @@
+{
+  "name": "rss",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An self-hosted online RSS reader",
+  "main": "./server/dist/src/server.js",
+  "scripts": {
+    "test": "npm run lint",
+    "lint": "eslint './**/*.{ts,json,js}'",
+    "build": "npm run -C ./server build && npm run -C ./client build",
+    "dev": "concurrently \"npm run -C ./server dev\" \"npm run -C ./client dev\"",
+    "start": "node ./server/dist/src/server.js",
+    "install:all": "cd server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eiskalteschatten/rss.git"
+  },
+  "author": "Alex Seifert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eiskalteschatten/rss/issues"
+  },
+  "homepage": "https://github.com/eiskalteschatten/rss#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
+    "concurrently": "^5.0.0",
+    "eslint": "^6.7.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^3.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
+}
