@@ -109,8 +109,6 @@ export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingl
     ]
   });
 
-console.log(parsedFeed)
-
   return {
     articles,
     parsedFeed
