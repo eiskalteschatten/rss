@@ -1,9 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../db';
+import ArticleInferface from '../../../types/Article';
+
 import Feed from './Feed';
 
-export class Article extends Model {
+export class Article extends Model implements ArticleInferface {
   id!: number;
   title: string;
   link: string;

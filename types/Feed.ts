@@ -1,0 +1,9 @@
+export default interface Feed {
+  id: number;
+  name: string;
+  feedUrl: string;
+  link: string;
+  fkFolder: number;
+  createdAt: Date;
+  updatedAt: Date;
+}

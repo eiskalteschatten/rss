@@ -1,9 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../db';
+import FeedInferface from '../../../types/Feed';
+
 import Folder from './Folder';
 
-export class Feed extends Model {
+export class Feed extends Model implements FeedInferface {
   id!: number;
   name: string;
   feedUrl: string;

@@ -1,8 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 
 import sequelize from '../db';
+import FolderInferface from '../../../types/Folder';
 
-export class Folder extends Model {
+export class Folder extends Model implements FolderInferface {
   id!: number;
   name: string;
   readonly createdAt: Date;
