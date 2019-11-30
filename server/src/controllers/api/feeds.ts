@@ -4,7 +4,7 @@ import { returnError } from '../../lib/apiErrorHandling';
 
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
-
+import { refreshAllFeeds } from '../../services/feedsService';
 
 class FeedsController implements Controller {
   router: Router;
@@ -20,7 +20,8 @@ class FeedsController implements Controller {
 
   private async refreshAllFeeds(req: Request, res: Response): Promise<void> {
     try {
-      // temporary filler for the linter
+      const articles = await refreshAllFeeds();
+      res.json({ articles });
     }
     catch(error) {
       returnError(error as HttpError, res);

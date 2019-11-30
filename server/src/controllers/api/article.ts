@@ -28,7 +28,7 @@ class ArticleController implements Controller {
     try {
       const articles = await Article.findAll({
         order: [
-          ['updatedAt', 'DESC']
+          ['pubDate', 'DESC']
         ]
       });
 
@@ -43,10 +43,10 @@ class ArticleController implements Controller {
     try {
       const articles = await Article.findAll({
         where: {
-          markedAsRead: false
+          read: false
         },
         order: [
-          ['updatedAt', 'DESC']
+          ['pubDate', 'DESC']
         ]
       });
 

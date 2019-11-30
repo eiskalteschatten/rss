@@ -4,6 +4,7 @@ import { returnError } from '../../lib/apiErrorHandling';
 
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
+
 import Feed from '../../models/Feed';
 import Folder from '../../models/Folder';
 

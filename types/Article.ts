@@ -3,11 +3,12 @@ export default interface Article {
   title: string;
   link: string;
   pubDate: Date;
-  author: string;
-  description: string;
+  creator: string;
+  contentSnippet: string;
   content: string;
+  guid: string;
   read: boolean;
-  markedAsRead: Date;
+  markedAsReadAt: Date;
   fkFeed: number;
   createdAt: Date;
   updatedAt: Date;

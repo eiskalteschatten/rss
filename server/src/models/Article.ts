@@ -10,11 +10,12 @@ export class Article extends Model implements ArticleInferface {
   title: string;
   link: string;
   pubDate: Date;
-  author: string;
-  description: string;
+  creator: string;
+  contentSnippet: string;
   content: string;
+  guid: string;
   read: boolean;
-  markedAsRead: Date;
+  markedAsReadAt: Date;
   fkFeed: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
@@ -31,27 +32,39 @@ Article.init({
   },
   pubDate: {
     type: DataTypes.DATE,
-    field: 'pub_date'
+    field: 'pub_date',
+    set(value: Date | string): void {
+      const setValue = typeof value === 'string' ? new Date(value) : value;
+      this.setDataValue('pubDate', setValue);
+    }
   },
-  author: {
+  creator: {
     type: DataTypes.STRING,
-    field: 'author'
+    field: 'creator'
   },
-  description: {
-    type: DataTypes.STRING,
-    field: 'description'
+  contentSnippet: {
+    type: DataTypes.TEXT,
+    field: 'content_snippet'
   },
   content: {
     type: DataTypes.TEXT,
     field: 'content'
   },
+  guid: {
+    type: DataTypes.STRING,
+    field: 'guid'
+  },
   read: {
     type: DataTypes.BOOLEAN,
     field: 'read'
   },
-  markedAsRead: {
+  markedAsReadAt: {
     type: DataTypes.DATE,
-    field: 'marked_as_read'
+    field: 'marked_as_read_at',
+    set(value: Date | string): void {
+      const setValue = typeof value === 'string' ? new Date(value) : value;
+      this.setDataValue('markedAsRead', setValue);
+    }
   },
   fkFeed: {
     type: DataTypes.INTEGER,
