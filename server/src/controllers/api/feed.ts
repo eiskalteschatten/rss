@@ -5,6 +5,7 @@ import { returnError } from '../../lib/apiErrorHandling';
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
 import Feed from '../../models/Feed';
+import Folder from '../../models/Folder';
 
 
 class FeedController implements Controller {
@@ -16,18 +17,39 @@ class FeedController implements Controller {
   }
 
   private initilizeRoutes(): void {
+    this.router.get('/', this.getAllFeeds);
     this.router.post('/', this.createFeed);
     this.router.patch('/:id', this.updateFeed);
     this.router.delete('/:id', this.deleteFeed);
+  }
+
+  private async getAllFeeds(req: Request, res: Response): Promise<void> {
+    try {
+      const feeds = await Feed.findAll({
+        order: [
+          ['name', 'DESC']
+        ],
+        include: [
+          {
+            model: Folder,
+            as: 'folder',
+            attributes: ['id', 'name']
+          }
+        ]
+      });
+
+      res.json({ feeds });
+    }
+    catch(error) {
+      returnError(error as HttpError, res);
+    }
   }
 
   private async createFeed(req: Request, res: Response): Promise<void> {
     try {
       const feed = await Feed.create(req.body);
 
-      res.json({
-        feed
-      });
+      res.json({ feed });
     }
     catch(error) {
       returnError(error as HttpError, res);
@@ -40,9 +62,7 @@ class FeedController implements Controller {
 
       await feed.update(req.body);
 
-      res.json({
-        feed
-      });
+      res.json({ feed });
     }
     catch(error) {
       returnError(error as HttpError, res);
