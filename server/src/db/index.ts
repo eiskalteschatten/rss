@@ -8,7 +8,7 @@ const dbConfig = config.get<Options>('dbConfig');
 // Clone the options because config.get returns an immutable object that doesn't work
 const options = Object.assign({}, dbConfig);
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, options);
+const sequelize = new Sequelize(options);
 export default sequelize;
 
 migrateDb({
