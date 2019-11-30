@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
+import enrouten from 'express-enrouten';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import passport from 'passport';
+import path from 'path';
 
 import { setupSequelize } from './db';
 import cors from './lib/cors';
@@ -17,8 +19,9 @@ class App {
   async setupApp(): Promise<express.Application> {
     this.configureExpress();
     await setupSequelize();
-    await this.configurePassport();
-    await this.configureGenericErrorHandling();
+    this.configurePassport();
+    this.configureRoutes();
+    this.configureGenericErrorHandling();
 
     console.log('App started with:');
     console.log('- Node.js', process.version);
@@ -35,11 +38,20 @@ class App {
     this.app.disable('x-powered-by');
   }
 
-  private async configurePassport(): Promise<void> {
+  private configurePassport(): void {
     this.app.use(passport.initialize());
   }
 
-  private async configureGenericErrorHandling(): Promise<void> {
+  private configureRoutes(): void {
+    const publicFolder: string = path.resolve(__dirname, '../public');
+    this.app.use(express.static(publicFolder));
+
+    this.app.use(enrouten({
+      directory: 'controllers'
+    }));
+  }
+
+  private configureGenericErrorHandling(): void {
     this.app.use((req: Request, res: Response): void => {
       res.status(404).json({
         message: 'Not found'
