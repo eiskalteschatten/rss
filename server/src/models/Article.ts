@@ -49,11 +49,11 @@ Article.init({
   },
   markedAsRead: {
     type: DataTypes.DATE,
-    field: 'markedAsRead'
+    field: 'marked_as_read'
   },
   fkFeed: {
     type: DataTypes.INTEGER,
-    field: 'fk_folder'
+    field: 'fk_feed'
   }
 }, {
   sequelize,
