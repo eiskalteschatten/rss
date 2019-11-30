@@ -8,6 +8,7 @@ import path from 'path';
 import { setupSequelize } from './db';
 import cors from './lib/cors';
 import { HttpError } from './lib/Error';
+import { setupCronjobs } from './lib/cronjobs';
 
 class App {
   app: express.Application;
@@ -22,6 +23,7 @@ class App {
     this.configurePassport();
     this.configureRoutes();
     this.configureGenericErrorHandling();
+    setupCronjobs();
 
     console.log('App started with:');
     console.log('- Node.js', process.version);
