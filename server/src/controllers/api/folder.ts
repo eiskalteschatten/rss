@@ -16,18 +16,32 @@ class FolderController implements Controller {
   }
 
   private initilizeRoutes(): void {
+    this.router.get('/', this.getAllFolders);
     this.router.post('/', this.createFolder);
     this.router.patch('/:id', this.updateFolder);
     this.router.delete('/:id', this.deleteFolder);
+  }
+
+  private async getAllFolders(req: Request, res: Response): Promise<void> {
+    try {
+      const folders = await Folder.findAll({
+        order: [
+          ['name', 'DESC']
+        ]
+      });
+
+      res.json({ folders });
+    }
+    catch(error) {
+      returnError(error as HttpError, res);
+    }
   }
 
   private async createFolder(req: Request, res: Response): Promise<void> {
     try {
       const folder = await Folder.create(req.body);
 
-      res.json({
-        folder
-      });
+      res.json({ folder });
     }
     catch(error) {
       returnError(error as HttpError, res);
@@ -40,9 +54,7 @@ class FolderController implements Controller {
 
       await folder.update(req.body);
 
-      res.json({
-        folder
-      });
+      res.json({ folder });
     }
     catch(error) {
       returnError(error as HttpError, res);
