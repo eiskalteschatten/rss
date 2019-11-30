@@ -6,4 +6,4 @@ export default interface Feed {
   fkFolder: number;
   createdAt: Date;
   updatedAt: Date;
-}
+} // eslint-disable-line semi

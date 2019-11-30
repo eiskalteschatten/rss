@@ -3,4 +3,4 @@ export default interface Feed {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-}
+} // eslint-disable-line semi

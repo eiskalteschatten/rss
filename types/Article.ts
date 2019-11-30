@@ -11,4 +11,4 @@ export default interface Article {
   fkFeed: number;
   createdAt: Date;
   updatedAt: Date;
-}
+} // eslint-disable-line semi
