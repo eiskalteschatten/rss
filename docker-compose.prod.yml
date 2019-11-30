@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+    app:
+        build:
+            context: .
+            args:
+                ENVIRONMENT: production
+        container_name: rss
+        ports:
+            - "4000:4000"
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+
+    # postgres:
+    #     image: postgres:11-alpine
+    #     container_name: rss_postgres
+    #     volumes:
+    #         - "./.data/postgres:/var/lib/postgresql/data"
+    #     environment:
+    #         POSTGRES_DB: rss
+    #         POSTGRES_USER: rss
+    #         POSTGRES_PASSWORD: rss
+    #     cap_drop:
+    #         - ALL
+    #     cap_add:
+    #         - CHOWN
+    #         - FOWNER
+    #         - SETGID
+    #         - SETUID

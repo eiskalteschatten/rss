@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+    app:
+        build:
+            context: .
+            args:
+                ENVIRONMENT: development
+        container_name: rss
+        command: "npm start"
+        ports:
+            - "3000:3000"
+            - "4000:4000"
+            - "5850:5858"
+            - "9229:9229"
+        volumes:
+            - "./src/client/src:/app/src/client/src"
+            - "./src/client/public:/app/src/client/public"
+            - "./src/server/src:/app/src/server/src"
+            - "./src/server/config:/app/src/server/config"
+            - "./src/types:/app/src/types"
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+
+    postgres:
+        image: postgres:11-alpine
+        container_name: rss_postgres
+        volumes:
+            - "./.data/postgres:/var/lib/postgresql/data"
+        environment:
+            POSTGRES_DB: rss
+            POSTGRES_USER: rss
+            POSTGRES_PASSWORD: rss
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+            - FOWNER
+            - SETGID
+            - SETUID

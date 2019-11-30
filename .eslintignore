@@ -1,0 +1,9 @@
+**/node_modules/*
+**/test-results/*
+
+**/*.spec.js
+**/*.spec.ts
+
+**/dist/*
+
+**/package-lock.json

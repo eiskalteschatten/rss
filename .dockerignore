@@ -1,0 +1,7 @@
+**/node_modules
+original_images
+**/dist
+.git
+.DS_Store
+**/*.spec.*
+**/*.test.*
