@@ -7,9 +7,9 @@ import { HttpError } from '../../lib/Error';
 
 
 class RssController implements Controller {
-  public router: Router;
+  router: Router;
 
-  public constructor(router: Router) {
+  constructor(router: Router) {
     this.router = router;
     this.initilizeRoutes();
   }
