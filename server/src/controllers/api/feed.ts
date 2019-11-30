@@ -49,12 +49,21 @@ class FeedController implements Controller {
 
   private async createFeed(req: Request, res: Response): Promise<void> {
     try {
-      const feed = await Feed.create(req.body);
-      const articles = await refreshForSingleFeed(feed.id);
+      const feed = await Feed.create({
+        feedUrl: req.body.feedUrl
+      });
+
+      const refreshed = await refreshForSingleFeed(feed.id);
+
+      await feed.update({
+        name: refreshed.parsedFeed.title,
+        link: refreshed.parsedFeed.link,
+        fkFolder: req.body.fkFolder
+      });
 
       res.json({
         feed,
-        articles
+        articles: refreshed.articles
       });
     }
     catch(error) {

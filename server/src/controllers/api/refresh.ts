@@ -31,8 +31,11 @@ class RefreshController implements Controller {
   private async refreshSingleFeed(req: Request, res: Response): Promise<void> {
     try {
       const feedId = parseInt(req.params.feedId);
-      const articles = await refreshForSingleFeed(feedId);
-      res.json({ articles });
+      const refreshed = await refreshForSingleFeed(feedId);
+
+      res.json({
+        articles: refreshed.articles
+      });
     }
     catch(error) {
       returnError(error as HttpError, res);

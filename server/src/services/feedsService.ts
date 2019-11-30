@@ -56,7 +56,12 @@ export async function refreshAllFeeds(): Promise<ArticleInterface[]> {
   return articles;
 }
 
-export async function refreshForSingleFeed(feedId: number): Promise<ArticleInterface[]> {
+interface RefreshSingleFeed {
+  articles: ArticleInterface;
+  parsedFeed: any;
+}
+
+export async function refreshForSingleFeed(feedId: number): Promise<RefreshSingleFeed> {
   const rssParser = new RssParser();
 
   const feed = await Feed.findByPk(feedId, {
@@ -104,5 +109,10 @@ export async function refreshForSingleFeed(feedId: number): Promise<ArticleInter
     ]
   });
 
-  return articles;
+console.log(parsedFeed)
+
+  return {
+    articles,
+    parsedFeed
+  };
 }
