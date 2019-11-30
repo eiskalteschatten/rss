@@ -4,6 +4,7 @@ import { returnError } from '../../lib/apiErrorHandling';
 
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
+import { refreshForSingleFeed } from '../../services/feedsService';
 
 import Feed from '../../models/Feed';
 import Folder from '../../models/Folder';
@@ -49,8 +50,12 @@ class FeedController implements Controller {
   private async createFeed(req: Request, res: Response): Promise<void> {
     try {
       const feed = await Feed.create(req.body);
+      const articles = await refreshForSingleFeed(feed.id);
 
-      res.json({ feed });
+      res.json({
+        feed,
+        articles
+      });
     }
     catch(error) {
       returnError(error as HttpError, res);
