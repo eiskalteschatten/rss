@@ -17,6 +17,7 @@ class ArticleController implements Controller {
 
   private initilizeRoutes(): void {
     this.router.post('/', this.createArticle);
+    this.router.patch('/mark-all-read', this.markAllAsRead);
     this.router.patch('/:id', this.updateArticle);
     this.router.delete('/:id', this.deleteArticle);
   }
@@ -28,6 +29,23 @@ class ArticleController implements Controller {
       res.json({
         article
       });
+    }
+    catch(error) {
+      returnError(error as HttpError, res);
+    }
+  }
+
+  private async markAllAsRead(req: Request, res: Response): Promise<void> {
+    try {
+      await Article.update({
+        markedAsRead: true
+      }, {
+        where: {
+          markedAsRead: false
+        }
+      });
+
+      res.status(204).send('');
     }
     catch(error) {
       returnError(error as HttpError, res);
