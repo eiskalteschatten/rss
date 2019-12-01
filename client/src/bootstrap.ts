@@ -15,7 +15,6 @@ export default async (): Promise<void> => {
     return;
   });
 
-
   await dispatch(feedGetAll());
   await dispatch(appStopBooting());
 };
