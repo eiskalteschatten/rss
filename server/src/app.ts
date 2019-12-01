@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import enrouten from 'express-enrouten';
+import basicAuth from 'express-basic-auth';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import passport from 'passport';
@@ -45,6 +46,13 @@ class App {
     this.app.use(passport.initialize());
     setupPassport();
     this.app.use('/api', passport.authenticate('basic', { session: false }));
+
+    this.app.use(/^((?!api).)*$/, basicAuth({
+      challenge: true,
+      users: {
+        [process.env.CLIENT_BASIC_AUTH_USERNAME]: process.env.CLIENT_BASIC_AUTH_PASSWORD
+      }
+    }));
   }
 
   private configureRoutes(): void {
