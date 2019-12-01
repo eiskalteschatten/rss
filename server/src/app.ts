@@ -9,6 +9,7 @@ import { setupSequelize } from './db';
 import cors from './lib/cors';
 import { HttpError } from './lib/Error';
 import { setupCronjobs } from './lib/cronjobs';
+import setupPassport from './lib/setupPassport';
 
 class App {
   app: express.Application;
@@ -42,6 +43,8 @@ class App {
 
   private configurePassport(): void {
     this.app.use(passport.initialize());
+    setupPassport();
+    this.app.use('/api', passport.authenticate('basic', { session: false }));
   }
 
   private configureRoutes(): void {
