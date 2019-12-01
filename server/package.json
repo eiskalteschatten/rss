@@ -2,12 +2,12 @@
   "name": "rss-server",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/src/server.js",
+  "main": "./dist/server/src/server.js",
   "scripts": {
     "build": "tsc",
     "postbuild": "copyfiles \"./src/**/*.njk\" ./dist",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --inspect -- src/server.ts",
-    "start": "node ./dist/src/server.js"
+    "start": "NODE_ENV=production node ./dist/server/src/server.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
