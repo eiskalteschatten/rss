@@ -2,13 +2,15 @@ import { AnyAction, applyMiddleware, combineReducers, compose, createStore } fro
 import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import app, { AppState } from './reducers/appReducer';
+import feed, { FeedState } from './reducers/feedReducer';
 
 const devExtension = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
 const composeEnhancers = devExtension && process.env.NODE_ENV !== 'production' ? devExtension : compose;
 
 const reducer = combineReducers({
-  app
+  app,
+  feed
 });
 
 const store = createStore(
@@ -20,6 +22,7 @@ const store = createStore(
 
 export interface State {
   app: AppState;
+  feed: FeedState;
 }
 
 // Shortcuts

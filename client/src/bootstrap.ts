@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { dispatch } from './store';
 import { appStopBooting } from './store/actions/appActions';
+import { feedGetAll } from './store/actions/feedActions';
 
 export default async (): Promise<void> => {
   axios.interceptors.request.use((config: any): any => {
@@ -15,5 +16,6 @@ export default async (): Promise<void> => {
   });
 
 
+  await dispatch(feedGetAll());
   await dispatch(appStopBooting());
 };
