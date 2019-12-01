@@ -4,6 +4,7 @@
   "private": true,
   "main": "./dist/server/src/server.js",
   "scripts": {
+    "lint": "eslint './**/*.{ts,json,js}'",
     "build": "tsc",
     "postbuild": "copyfiles \"./src/**/*.njk\" ./dist",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --inspect -- src/server.ts",
@@ -33,7 +34,11 @@
     "@types/node-cron": "^2.0.2",
     "@types/passport": "^1.0.2",
     "@types/passport-http": "^0.3.8",
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
     "copyfiles": "^2.1.1",
+    "eslint": "^6.7.2",
+    "eslint-plugin-promise": "^4.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.2"
   }
