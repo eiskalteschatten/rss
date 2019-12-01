@@ -9,7 +9,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 
-// import { State } from '../../store';
+import { State } from '../store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Loader: React.FC = () => {
   const classes = useStyles();
-  const isLoading = true;// useSelector((state: State) => state.app.isLoading);
+  const isLoading = useSelector((state: State) => state.app.isLoading);
   const [open, setOpen] = useState<boolean>(!!isLoading);
 
   useEffect(() => {

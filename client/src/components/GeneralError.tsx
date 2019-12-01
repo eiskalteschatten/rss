@@ -11,7 +11,7 @@ import {
 
 import { Error as ErrorIcon, Close as CloseIcon } from '@material-ui/icons';
 
-// import { State } from '../../store';
+import { State } from '../store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const GeneralError: React.FC = () => {
-  // const generalError = useSelector((state: State) => state.app.error);
-  const generalError = undefined;
+  const generalError = useSelector((state: State) => state.app.error);
   const [open, setOpen] = useState<boolean>(!!generalError);
   const classes = useStyles();
 
