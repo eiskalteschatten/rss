@@ -11,7 +11,7 @@ export const initialState: FeedState = {
   feeds: []
 };
 
-const appReducer: Reducer<FeedState, FeedActions> = (
+const feedReducer: Reducer<FeedState, FeedActions> = (
   state: FeedState = initialState,
   action: FeedActions
 ): any => {
@@ -26,4 +26,4 @@ const appReducer: Reducer<FeedState, FeedActions> = (
   }
 };
 
-export default appReducer;
+export default feedReducer;

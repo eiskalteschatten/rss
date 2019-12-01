@@ -11,7 +11,7 @@ export const initialState: ArticleState = {
   articles: []
 };
 
-const appReducer: Reducer<ArticleState, ArticleActions> = (
+const articleReducer: Reducer<ArticleState, ArticleActions> = (
   state: ArticleState = initialState,
   action: ArticleActions
 ): any => {
@@ -26,4 +26,4 @@ const appReducer: Reducer<ArticleState, ArticleActions> = (
   }
 };
 
-export default appReducer;
+export default articleReducer;
