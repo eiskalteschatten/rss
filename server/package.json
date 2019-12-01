@@ -6,7 +6,6 @@
   "scripts": {
     "lint": "eslint './**/*.{ts,json,js}'",
     "build": "tsc",
-    "postbuild": "copyfiles \"./src/**/*.njk\" ./dist",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --inspect -- src/server.ts",
     "start": "NODE_ENV=production node ./dist/server/src/server.js"
   },
@@ -36,7 +35,6 @@
     "@types/passport-http": "^0.3.8",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
-    "copyfiles": "^2.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-promise": "^4.2.1",
     "ts-node-dev": "^1.0.0-pre.44",
