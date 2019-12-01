@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { dispatch } from './store';
 import { appStopBooting } from './store/actions/appActions';
+import { folderGetAll } from './store/actions/folderActions';
 import { feedGetAll } from './store/actions/feedActions';
 
 export default async (): Promise<void> => {
@@ -15,6 +16,7 @@ export default async (): Promise<void> => {
     return;
   });
 
+  await dispatch(folderGetAll());
   await dispatch(feedGetAll());
   await dispatch(appStopBooting());
 };
