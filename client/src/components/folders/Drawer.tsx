@@ -5,6 +5,10 @@ import {
   Drawer,
   Divider,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
   makeStyles,
   Theme,
   useTheme,
@@ -13,6 +17,8 @@ import {
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import FolderIcon from '@material-ui/icons/Folder';
+
 
 import { dispatch, State } from '../../store';
 import { folderCloseDrawer } from '../../store/actions/folderActions';
@@ -42,6 +48,7 @@ const FoldersDrawer: React.FC = () => {
   const classes = useStyles();
   const theme = useTheme();
   const open = useSelector((state: State) => state.folder.drawerOpen);
+  const folders = useSelector((state: State) => state.folder.folders);
   const handleDrawerClose = () => dispatch(folderCloseDrawer());
 
   return (<Drawer
@@ -60,6 +67,17 @@ const FoldersDrawer: React.FC = () => {
     </div>
 
     <Divider />
+
+    <List>
+      {folders.map((folder) => (
+        <ListItem button key={folder.id}>
+          <ListItemIcon>
+            <FolderIcon />
+          </ListItemIcon>
+          <ListItemText primary={folder.name} />
+        </ListItem>
+      ))}
+    </List>
   </Drawer>);
 }
 
