@@ -10,12 +10,21 @@ export interface FolderSetAll extends Action<'FOLDER_SET_ALL'> {
   folders: Folder[]
 }
 
-export type FolderActions = FolderSetAll;
+export interface FolderOpenDrawer extends Action<'FOLDER_OPEN_DRAWER'> {}
+export interface FolderCloseDrawer extends Action<'FOLDER_CLOSE_DRAWER'> {}
+
+export type FolderActions =
+  FolderSetAll |
+  FolderOpenDrawer |
+  FolderCloseDrawer;
 
 export const folderSetAll = (folders: Folder[]): FolderSetAll => ({
   type: 'FOLDER_SET_ALL',
   folders
 });
+
+export const folderOpenDrawer = (): FolderOpenDrawer => ({ type: 'FOLDER_OPEN_DRAWER' });
+export const folderCloseDrawer = (): FolderCloseDrawer => ({ type: 'FOLDER_CLOSE_DRAWER' });
 
 export const folderGetAll: ActionCreator<
   ThunkAction<

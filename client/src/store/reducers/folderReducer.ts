@@ -5,10 +5,12 @@ import Folder from '../../../../types/Folder';
 
 export interface FolderState {
   folders: Folder[];
+  drawerOpen: boolean;
 }
 
 export const initialState: FolderState = {
-  folders: []
+  folders: [],
+  drawerOpen: false
 };
 
 const folderReducer: Reducer<FolderState, FolderActions> = (
@@ -20,6 +22,16 @@ const folderReducer: Reducer<FolderState, FolderActions> = (
       return {
         ...state,
         folders: action.folders
+      };
+    case 'FOLDER_OPEN_DRAWER':
+      return {
+        ...state,
+        drawerOpen: true
+      };
+    case 'FOLDER_CLOSE_DRAWER':
+      return {
+        ...state,
+        drawerOpen: false
       };
     default:
       return state;
