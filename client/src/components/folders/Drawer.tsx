@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Typography,
   makeStyles,
   Theme,
   useTheme,
@@ -38,7 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
+      ...theme.mixins.toolbar
+    },
+    headerText: {
+      flex: 'auto'
+    },
+    closeButton: {
       justifyContent: 'flex-end'
     }
   })
@@ -61,9 +67,15 @@ const FoldersDrawer: React.FC = () => {
     }}
   >
     <div className={classes.drawerHeader}>
-      <IconButton onClick={handleDrawerClose}>
-        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>
+      <Typography variant='h6' noWrap className={classes.headerText}>
+        Folders
+      </Typography>
+
+      <div className={classes.closeButton}>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
+        </div>
     </div>
 
     <Divider />
