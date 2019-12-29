@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ListItemSecondaryAction,
   Typography,
   makeStyles,
   Theme,
@@ -19,6 +20,7 @@ import {
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FolderIcon from '@material-ui/icons/Folder';
+import DeleteIcon from '@material-ui/icons/Delete';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
@@ -52,6 +54,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     folderList: {
       flex: 'auto'
+    },
+    listItem: {
+      '&:hover': {
+        '& $listItemDelete': {
+          display: 'inline !important'
+        }
+      }
+    },
+    listItemDelete: {
+      display: 'none'
     }
   })
 );
@@ -129,12 +141,19 @@ const FoldersDrawer: React.FC = () => {
     <div className={classes.folderList}>
       <List>
         {sortedFolders.map((folder) => (
-          <ListItem button key={folder.id}>
-            <ListItemIcon>
-              <FolderIcon />
-            </ListItemIcon>
-            <ListItemText primary={folder.name} />
-          </ListItem>
+          <span className={classes.listItem}>
+            <ListItem button key={folder.id}>
+              <ListItemIcon>
+                <FolderIcon />
+              </ListItemIcon>
+              <ListItemText primary={folder.name} />
+              <ListItemSecondaryAction  className={classes.listItemDelete}>
+                <IconButton edge='end'>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          </span>
         ))}
       </List>
     </div>

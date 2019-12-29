@@ -45,7 +45,7 @@ const AppBar: React.FC = () => {
   return (<AppBarMu
     position='fixed'
     className={clsx(classes.appBar, {
-      [classes.appBarShift]: open,
+      [classes.appBarShift]: open
     })}
   >
     <Toolbar>
