@@ -19,7 +19,9 @@ import {
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FolderIcon from '@material-ui/icons/Folder';
-
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+import ArchiveIcon from '@material-ui/icons/Archive';
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 import { dispatch, State } from '../../store';
 import { folderCloseDrawer } from '../../store/actions/folderActions';
@@ -46,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     closeButton: {
       justifyContent: 'flex-end'
+    },
+    folderList: {
+      flex: 'auto'
     }
   })
 );
@@ -81,14 +86,43 @@ const FoldersDrawer: React.FC = () => {
     <Divider />
 
     <List>
-      {folders.map((folder) => (
-        <ListItem button key={folder.id}>
-          <ListItemIcon>
-            <FolderIcon />
-          </ListItemIcon>
-          <ListItemText primary={folder.name} />
-        </ListItem>
-      ))}
+      <ListItem button>
+        <ListItemIcon>
+          <RssFeedIcon />
+        </ListItemIcon>
+        <ListItemText primary='All Items' />
+      </ListItem>
+
+      <ListItem button>
+        <ListItemIcon>
+          <ArchiveIcon />
+        </ListItemIcon>
+        <ListItemText primary='Archive' />
+      </ListItem>
+    </List>
+
+    <Divider />
+
+    <div className={classes.folderList}>
+      <List>
+        {folders.map((folder) => (
+          <ListItem button key={folder.id}>
+            <ListItemIcon>
+              <FolderIcon />
+            </ListItemIcon>
+            <ListItemText primary={folder.name} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+
+    <List>
+      <ListItem button>
+        <ListItemIcon>
+          <CreateNewFolderIcon />
+        </ListItemIcon>
+        <ListItemText primary='Add Folder' />
+      </ListItem>
     </List>
   </Drawer>);
 }
