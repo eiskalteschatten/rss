@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -25,6 +25,7 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 
 import { dispatch, State } from '../../store';
 import { folderCloseDrawer } from '../../store/actions/folderActions';
+import Folder from '../../../../types/Folder';
 
 import { DRAWER_WIDTH } from '../../constants';
 
@@ -55,12 +56,34 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+function sortFolders(a: Folder, b: Folder): number {
+ const aName = a.name.toUpperCase();
+ const bName = b.name.toUpperCase();
+
+ let comparison = 0;
+
+ if (aName > bName) {
+   comparison = 1;
+ }
+ else if (aName < bName) {
+   comparison = -1;
+ }
+
+ return comparison;
+}
+
 const FoldersDrawer: React.FC = () => {
   const classes = useStyles();
   const theme = useTheme();
   const open = useSelector((state: State) => state.folder.drawerOpen);
-  const folders = useSelector((state: State) => state.folder.folders);
+  const folders = useSelector((state: State) => state.folder.folders) as Folder[];
   const handleDrawerClose = () => dispatch(folderCloseDrawer());
+  let sortedFolders: Folder[] = folders;
+
+  useEffect(() => {
+    sortedFolders = folders;
+    sortedFolders.sort(sortFolders);
+  }, [folders]);
 
   return (<Drawer
     className={classes.drawer}
@@ -105,7 +128,7 @@ const FoldersDrawer: React.FC = () => {
 
     <div className={classes.folderList}>
       <List>
-        {folders.map((folder) => (
+        {sortedFolders.map((folder) => (
           <ListItem button key={folder.id}>
             <ListItemIcon>
               <FolderIcon />
