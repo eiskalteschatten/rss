@@ -15,7 +15,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { dispatch, State } from '../store';
-import { folderOpenDrawer } from '../store/actions/folderActions';
+import { folderOpenDrawer, folderCloseDrawer } from '../store/actions/folderActions';
 
 import { DRAWER_WIDTH } from '../constants';
 
@@ -40,18 +40,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const AppBar: React.FC = () => {
   const classes = useStyles();
-  const open = useSelector((state: State) => state.folder.drawerOpen);
+  const drawerOpen = useSelector((state: State) => state.folder.drawerOpen);
 
   return (<AppBarMu
     position='fixed'
     className={clsx(classes.appBar, {
-      [classes.appBarShift]: open
+      [classes.appBarShift]: drawerOpen
     })}
   >
     <Toolbar>
       <IconButton
         color='inherit'
-        onClick={() => dispatch(folderOpenDrawer())}
+        onClick={() => drawerOpen ? dispatch(folderCloseDrawer()) : dispatch(folderOpenDrawer())}
         edge='start'
         // className={clsx(classes.menuButton, open && classes.hide)}
       >
