@@ -57,19 +57,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function sortFolders(a: Folder, b: Folder): number {
- const aName = a.name.toUpperCase();
- const bName = b.name.toUpperCase();
+  const aName = a.name.toUpperCase();
+  const bName = b.name.toUpperCase();
 
- let comparison = 0;
+  let comparison = 0;
 
- if (aName > bName) {
-   comparison = 1;
- }
- else if (aName < bName) {
-   comparison = -1;
- }
+  if (aName > bName) {
+    comparison = 1;
+  }
+  else if (aName < bName) {
+    comparison = -1;
+  }
 
- return comparison;
+  return comparison;
 }
 
 const FoldersDrawer: React.FC = () => {
