@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
-      })
+      }),
+      zIndex: theme.zIndex.drawer + 1
     },
     appBarShift: {
       width: `calc(100% - ${DRAWER_WIDTH}px)`,

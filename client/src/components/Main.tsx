@@ -65,6 +65,8 @@ const Main: React.FC = () => {
       <div className={classes.reset} />
 
       <ArticlesList />
+
+      article content
     </main>
   </div>);
 }
