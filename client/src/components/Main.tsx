@@ -9,6 +9,7 @@ import { articleGetAllUnread } from '../store/actions/articleActions';
 
 import AppBar from './AppBar';
 import Drawer from './folders/Drawer';
+import ArticlesList from './articles/List';
 
 import { State } from '../store';
 
@@ -63,7 +64,7 @@ const Main: React.FC = () => {
     >
       <div className={classes.reset} />
 
-      main
+      <ArticlesList />
     </main>
   </div>);
 }
