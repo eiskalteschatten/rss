@@ -149,8 +149,8 @@ const FoldersDrawer: React.FC = () => {
     <div className={classes.folderList}>
       <List>
         {sortedFolders.map((folder) => (
-          <span className={classes.listItem}>
-            <ListItem button key={folder.id}>
+          <span className={classes.listItem} key={folder.id}>
+            <ListItem button>
               <ListItemIcon>
                 <FolderIcon />
               </ListItemIcon>
