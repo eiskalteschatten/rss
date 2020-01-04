@@ -21,6 +21,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
@@ -121,11 +122,18 @@ const FoldersDrawer: React.FC = () => {
     <Divider />
 
     <List>
-      <ListItem button>
+    <ListItem button>
         <ListItemIcon>
           <RssFeedIcon />
         </ListItemIcon>
         <ListItemText primary='All Items' />
+      </ListItem>
+
+      <ListItem button>
+        <ListItemIcon>
+          <NewReleasesIcon />
+        </ListItemIcon>
+        <ListItemText primary='Unread Items' />
       </ListItem>
 
       <ListItem button>
