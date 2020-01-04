@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       opacity: .5
     },
     pubDate: {
+      display: 'block',
       fontSize: '.9em',
       opacity: .7
     }
@@ -45,7 +46,7 @@ const ArticlesList: React.FC = () => {
   return (<List>
     {articles.map((article) => (
       <span
-          key={article.id}
+        key={article.id}
         className={clsx({
           [classes.markedAsRead]: article.read
         })}
@@ -53,12 +54,12 @@ const ArticlesList: React.FC = () => {
         <ListItem button>
           <ListItemText
             primary={article.title}
-            secondary={<React.Fragment>
-              <div className={classes.pubDate}>
+            secondary={<>
+              <span className={classes.pubDate}>
                 {formatPubDate(article.pubDate)}
-              </div>
+              </span>
               {article.contentSnippet.substring(0, 75)}
-            </React.Fragment>}
+            </>}
           />
         </ListItem>
       </span>
