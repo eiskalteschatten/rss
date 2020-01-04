@@ -10,10 +10,16 @@ import { articleGetAllUnread } from '../store/actions/articleActions';
 import AppBar from './AppBar';
 import Drawer from './folders/Drawer';
 import ArticlesList from './articles/List';
+import ArticleContent from './articles/Content';
 
 import { State } from '../store';
 
-import { DRAWER_WIDTH } from '../constants';
+import {
+  DRAWER_WIDTH,
+  ARTICLE_LIST_WIDTH,
+  APPBAR_HEIGHT,
+  APPBAR_HEIGHT_MOBILE
+} from '../constants';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex'
     },
     content: {
+      display: 'flex',
       flexGrow: 1,
       // padding: theme.spacing(3),
       transition: theme.transitions.create('margin', {
@@ -36,12 +43,23 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0
     },
-    reset: {
-      display: 'flex',
+    articlesList: {
+      flexGrow: 0
+    },
+    articleContent: {
       alignItems: 'center',
+      flexGrow: 1,
+      marginLeft: ARTICLE_LIST_WIDTH,
       padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
+      [theme.breakpoints.down('sm')]: {
+        marginTop: APPBAR_HEIGHT_MOBILE,
+        height: `calc(100vh - ${APPBAR_HEIGHT_MOBILE}px)`
+      },
+      [theme.breakpoints.up('sm')]: {
+        marginTop: APPBAR_HEIGHT,
+        height: `calc(100vh - ${APPBAR_HEIGHT}px)`
+      }
     }
   })
 );
@@ -62,11 +80,12 @@ const Main: React.FC = () => {
         [classes.contentShift]: open
       })}
     >
-      <div className={classes.reset} />
-
-      <ArticlesList />
-
-      article content
+      <div className={classes.articlesList}>
+        <ArticlesList />
+      </div>
+      <div className={classes.articleContent}>
+        <ArticleContent />
+      </div>
     </main>
   </div>);
 }
