@@ -60,6 +60,29 @@ export const articleGetAllUnread: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
+    const res: any = await axios.get('/api/article/unread');
+    dispatch(articleSetAll(res.data.articles));
+  }
+  catch (error) {
+    dispatch(appSetFormError('An error occurred while fetching all articles.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
+
+export const articleRefreshAndGetAllUnread: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (articles: Article[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
     await axios.post('/api/refresh');
     const res: any = await axios.get('/api/article/unread');
     dispatch(articleSetAll(res.data.articles));
@@ -84,7 +107,6 @@ export const articleGetAll: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    await axios.post('/api/refresh');
     const res: any = await axios.get('/api/article');
     dispatch(articleSetAll(res.data.articles));
   }
