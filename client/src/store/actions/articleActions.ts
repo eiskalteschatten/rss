@@ -167,7 +167,7 @@ export const articleMarkAllRead: ActionCreator<
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.patch('/api/article/mark-all-read');
+    await axios.patch('/api/article/mark-all-read');
 
     const state = getState();
     const articles = Object.create(state.article.articles);
