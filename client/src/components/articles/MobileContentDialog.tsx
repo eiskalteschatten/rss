@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import {
   Dialog,
   Slide,
+  AppBar,
+  Toolbar,
   IconButton,
   makeStyles,
   Theme,
@@ -20,11 +22,14 @@ import { articleCloseMobileDialog } from '../../store/actions/articleActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    closeButton: {
-      position: 'absolute',
-      top: theme.spacing(0),
-      right: theme.spacing(2),
-      zIndex: 10000
+    appBar: {
+      position: 'relative'
+    },
+    appBarFiller: {
+      flex: 1
+    },
+    content: {
+      paddingTop: theme.spacing(3)
     }
   })
 );
@@ -45,11 +50,18 @@ const ArticleMobileContent: React.FC = () => {
     TransitionComponent={Transition}
     onClose={handleClose}
   >
-    <IconButton edge='end' color='inherit' onClick={handleClose} className={classes.closeButton}>
-      <CloseIcon />
-    </IconButton>
+    <AppBar className={classes.appBar} color='primary'>
+      <Toolbar>
+        <div className={classes.appBarFiller} />
+        <IconButton edge='end' color='inherit' onClick={handleClose}>
+          <CloseIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
 
-    <ArticleContent />
+    <div className={classes.content}>
+      <ArticleContent />
+    </div>
   </Dialog>);
 }
 
