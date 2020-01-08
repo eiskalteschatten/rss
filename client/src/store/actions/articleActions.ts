@@ -140,7 +140,8 @@ export const articleMarkAsRead: ActionCreator<
       articles[selectedArticleIndex] = res.data.article;
     }
 
-    dispatch(articleSetAll(articles));
+    const newArticles = Object.create(articles);
+    dispatch(articleSetAll(newArticles));
   }
   catch (error) {
     dispatch(appSetFormError('An error occurred while marking an article as read.'));

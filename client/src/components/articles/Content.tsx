@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
   Container,
   Typography,
+  Toolbar,
+  Button,
   makeStyles,
   Theme,
   createStyles
 } from '@material-ui/core';
+
+import MarkunreadIcon from '@material-ui/icons/Markunread';
 
 import { State } from '../../store';
 import Article from '../../../../types/Article';
@@ -54,14 +58,29 @@ const ArticleContent: React.FC = () => {
   const classes = useStyles();
   const selectedArticleIndex = useSelector((state: State) => state.article.selectedArticleIndex) as number;
   const articles = useSelector((state: State) => state.article.articles) as Article[];
+  const [selectedArticle, setSelectedArticle] = useState<Article>();
 
-  if (selectedArticleIndex === undefined || selectedArticleIndex === null) {
+  useEffect(() => {
+    setSelectedArticle(articles[selectedArticleIndex]);
+  }, [selectedArticleIndex, articles]);
+
+  if (!selectedArticle) {
     return <div />;
   }
 
-  const selectedArticle = articles[selectedArticleIndex];
-
   return (<Container fixed>
+    <Toolbar disableGutters>
+      {selectedArticle.read ? (
+        <Button startIcon={<MarkunreadIcon />}>
+          Mark as Unread
+        </Button>
+      ) : (
+        <Button startIcon={<MarkunreadIcon />}>
+          Mark as Read
+        </Button>
+      )}
+    </Toolbar>
+
     <a
       href={selectedArticle.link}
       target='_blank'
