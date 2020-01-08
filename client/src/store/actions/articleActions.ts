@@ -135,18 +135,51 @@ export const articleMarkReadUnread: ActionCreator<
     const res: any = await axios.patch(`/api/article/mark-read-unread/${id}`, { read });
 
     const state = getState();
-    const articles = state.article.articles;
+    const articles = Object.create(state.article.articles);
     const selectedArticleIndex = state.article.selectedArticleIndex;
 
     if (selectedArticleIndex !== undefined && selectedArticleIndex !== null) {
       articles[selectedArticleIndex] = res.data.article;
     }
 
-    const newArticles = Object.create(articles);
-    dispatch(articleSetAll(newArticles));
+    dispatch(articleSetAll(articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while marking an article as read.'));
+    dispatch(appSetFormError('An error occurred while marking an article as read or unread.'));
+    console.error(error);
+  }
+
+  clearTimeout(loadingTimer);
+  return dispatch(appStopLoading());
+};
+
+export const articleMarkAllRead: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  let loadingTimer: NodeJS.Timer;
+  loadingTimer = setTimeout(() => dispatch(appStartLoading()), 1000);
+
+  dispatch(appSetFormError(''));
+
+  try {
+    const res: any = await axios.patch('/api/article/mark-all-read');
+
+    const state = getState();
+    const articles = Object.create(state.article.articles);
+
+    for (const i in articles) {
+      articles[i].read = true;
+    }
+
+    dispatch(articleSetAll(articles));
+  }
+  catch (error) {
+    dispatch(appSetFormError('An error occurred while marking all articles as read.'));
     console.error(error);
   }
 

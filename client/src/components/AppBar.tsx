@@ -24,7 +24,7 @@ import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
 
 import { dispatch, State } from '../store';
 import { folderOpenDrawer, folderCloseDrawer } from '../store/actions/folderActions';
-import { articleRefreshAndGetAllUnread } from '../store/actions/articleActions';
+import { articleRefreshAndGetAllUnread, articleMarkAllRead } from '../store/actions/articleActions';
 
 import { DRAWER_WIDTH } from '../constants';
 
@@ -60,7 +60,7 @@ const AppBar: React.FC = () => {
 
   const handleMarkAllAsRead = () => {
     handleConfirmDialogClose();;
-    // dispatch(articleRefreshAndGetAllUnread());
+    dispatch(articleMarkAllRead());
   };
 
   const ConfirmDialog: React.FC = () => {
