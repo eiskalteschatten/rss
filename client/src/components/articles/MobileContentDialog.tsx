@@ -4,8 +4,6 @@ import { useSelector } from 'react-redux';
 import {
   Dialog,
   Slide,
-  AppBar,
-  Toolbar,
   IconButton,
   makeStyles,
   Theme,
@@ -22,22 +20,17 @@ import { articleCloseMobileDialog } from '../../store/actions/articleActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-    },
-    appBar: {
-      position: 'relative'
-    },
-    appBarFiller: {
-      flex: 1
-    },
-    content: {
-      paddingTop: theme.spacing(3)
+    closeButton: {
+      position: 'absolute',
+      top: theme.spacing(0),
+      right: theme.spacing(2),
+      zIndex: 10000
     }
   })
 );
 
 const Transition = React.forwardRef<unknown, TransitionProps>((props, ref) =>
-  <Slide direction='up' ref={ref} {...props} />
+  <Slide direction='left' ref={ref} {...props} />
 );
 
 const ArticleMobileContent: React.FC = () => {
@@ -51,20 +44,12 @@ const ArticleMobileContent: React.FC = () => {
     open={open}
     TransitionComponent={Transition}
     onClose={handleClose}
-    className={classes.root}
   >
-    <AppBar className={classes.appBar} color='secondary'>
-      <Toolbar>
-        <div className={classes.appBarFiller} />
-        <IconButton edge='end' color='inherit' onClick={handleClose}>
-          <CloseIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <IconButton edge='end' color='inherit' onClick={handleClose} className={classes.closeButton}>
+      <CloseIcon />
+    </IconButton>
 
-    <div className={classes.content}>
-      <ArticleContent />
-    </div>
+    <ArticleContent />
   </Dialog>);
 }
 
