@@ -88,7 +88,17 @@ class ArticleController implements Controller {
         }
       });
 
-      res.status(204).send('');
+      const articles = await Article.findAll({
+        order: [
+          ['pubDate', 'DESC']
+        ],
+        include: [{
+          model: Feed,
+          as: 'feed'
+        }]
+      });
+
+      res.json({ articles });
     }
     catch(error) {
       returnError(error as HttpError, res);
