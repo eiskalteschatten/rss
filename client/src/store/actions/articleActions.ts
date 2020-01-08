@@ -7,21 +7,26 @@ import Article from '../../../../types/Article';
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from './appActions';
 
 export interface ArticleSetAll extends Action<'ARTICLE_SET_ALL'> {
-  articles: Article[]
+  articles: Article[];
 }
 
 export interface ArticleOpenMobileDialog extends Action<'ARTICLE_OPEN_MOBILE_DIALOG'> {
-  mobileDialogOpen: boolean
+  mobileDialogOpen: boolean;
 }
 
 export interface ArticleCloseMobileDialog extends Action<'ARTICLE_CLOSE_MOBILE_DIALOG'> {
-  mobileDialogOpen: boolean
+  mobileDialogOpen: boolean;
+}
+
+export interface ArticleSetSelectedIndex extends Action<'ARTICLE_SET_SELECTED_INDEX'> {
+  selectedArticleIndex: number;
 }
 
 export type ArticleActions =
   ArticleSetAll |
   ArticleOpenMobileDialog |
-  ArticleCloseMobileDialog;
+  ArticleCloseMobileDialog |
+  ArticleSetSelectedIndex;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
@@ -36,6 +41,11 @@ export const articleOpenMobileDialog = (): ArticleOpenMobileDialog => ({
 export const articleCloseMobileDialog = (): ArticleCloseMobileDialog => ({
   type: 'ARTICLE_CLOSE_MOBILE_DIALOG',
   mobileDialogOpen: false
+});
+
+export const articleSetSelectedIndex = (selectedArticleIndex: number): ArticleSetSelectedIndex => ({
+  type: 'ARTICLE_SET_SELECTED_INDEX',
+  selectedArticleIndex
 });
 
 export const articleGetAllUnread: ActionCreator<

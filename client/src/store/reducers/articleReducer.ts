@@ -5,6 +5,7 @@ import Article from '../../../../types/Article';
 
 export interface ArticleState {
   articles: Article[];
+  selectedArticleIndex?: number;
   mobileDialogOpen: boolean;
 }
 
@@ -32,6 +33,11 @@ const articleReducer: Reducer<ArticleState, ArticleActions> = (
       return {
         ...state,
         mobileDialogOpen: false
+      };
+    case 'ARTICLE_SET_SELECTED_INDEX':
+      return {
+        ...state,
+        selectedArticleIndex: action.selectedArticleIndex
       };
     default:
       return state;

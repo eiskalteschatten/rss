@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 
 import { State, dispatch } from '../../store';
-import { articleOpenMobileDialog } from '../../store/actions/articleActions';
+import { articleOpenMobileDialog, articleSetSelectedIndex } from '../../store/actions/articleActions';
 
 import Article from '../../../../types/Article';
 
@@ -74,9 +74,9 @@ const ArticlesList: React.FC = () => {
   const articles = useSelector((state: State) => state.article.articles) as Article[];
   const foldersDrawerOpen = useSelector((state: State) => state.folder.drawerOpen);
 
-  const handleOpenArticle = () => {
-    // if mobile
-    dispatch(articleOpenMobileDialog());
+  const handleOpenArticle = async (index: number): Promise<void> => {
+    await dispatch(articleSetSelectedIndex(index));
+    await dispatch(articleOpenMobileDialog());
   };
 
   return (<>
@@ -90,14 +90,14 @@ const ArticlesList: React.FC = () => {
         open
       >
         <List>
-          {articles.map((article) => (
+          {articles.map((article, index) => (
             <span
               key={article.id}
               className={clsx({
                 [classes.markedAsRead]: article.read
               })}
             >
-              <ListItem button onClick={handleOpenArticle}>
+              <ListItem button onClick={() => handleOpenArticle(index)}>
                 <ListItemText
                   primary={article.title}
                   secondary={<>

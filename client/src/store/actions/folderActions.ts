@@ -7,7 +7,7 @@ import Folder from '../../../../types/Folder';
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from './appActions';
 
 export interface FolderSetAll extends Action<'FOLDER_SET_ALL'> {
-  folders: Folder[]
+  folders: Folder[];
 }
 
 export interface FolderOpenDrawer extends Action<'FOLDER_OPEN_DRAWER'> {}

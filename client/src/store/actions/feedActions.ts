@@ -7,7 +7,7 @@ import Feed from '../../../../types/Feed';
 import { AppStopLoadingAction, appStartLoading, appStopLoading, appSetFormError } from './appActions';
 
 export interface FeedSetAll extends Action<'FEED_SET_ALL'> {
-  feeds: Feed[]
+  feeds: Feed[];
 }
 
 export type FeedActions = FeedSetAll;
