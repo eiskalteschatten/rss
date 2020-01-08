@@ -126,7 +126,9 @@ export const articleMarkReadUnread: ActionCreator<
     AppStopLoadingAction
   >
 > = (id: number, read: boolean): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
-  dispatch(appStartLoading());
+  let loadingTimer: NodeJS.Timer;
+  loadingTimer = setTimeout(() => dispatch(appStartLoading()), 1000);
+
   dispatch(appSetFormError(''));
 
   try {
@@ -148,5 +150,6 @@ export const articleMarkReadUnread: ActionCreator<
     console.error(error);
   }
 
+  clearTimeout(loadingTimer);
   return dispatch(appStopLoading());
 };
