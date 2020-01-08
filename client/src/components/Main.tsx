@@ -82,7 +82,7 @@ const Main: React.FC = () => {
           <ArticleContent />
         </div>
       </Hidden>
-      <Hidden smUp>
+      <Hidden mdUp>
         <ArticleMobileContent />
       </Hidden>
     </main>
