@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -9,11 +9,12 @@ import {
   ListItemText,
   makeStyles,
   Theme,
-  useTheme,
   createStyles
 } from '@material-ui/core';
 
-import { State } from '../../store';
+import { State, dispatch } from '../../store';
+import { articleOpenMobileDialog } from '../../store/actions/articleActions';
+
 import Article from '../../../../types/Article';
 
 import {
@@ -70,10 +71,13 @@ const formatPubDate = (date: Date): string => new Date(date).toLocaleString('en-
 
 const ArticlesList: React.FC = () => {
   const classes = useStyles();
-  const theme = useTheme();
   const articles = useSelector((state: State) => state.article.articles) as Article[];
   const foldersDrawerOpen = useSelector((state: State) => state.folder.drawerOpen);
-  const [mobileListOpen, setMobileListOpen] = useState<boolean>(false);
+
+  const handleOpenArticle = () => {
+    // if mobile
+    dispatch(articleOpenMobileDialog());
+  };
 
   return (<>
       <Drawer
@@ -93,7 +97,7 @@ const ArticlesList: React.FC = () => {
                 [classes.markedAsRead]: article.read
               })}
             >
-              <ListItem button>
+              <ListItem button onClick={handleOpenArticle}>
                 <ListItemText
                   primary={article.title}
                   secondary={<>

@@ -10,11 +10,32 @@ export interface ArticleSetAll extends Action<'ARTICLE_SET_ALL'> {
   articles: Article[]
 }
 
-export type ArticleActions = ArticleSetAll;
+export interface ArticleOpenMobileDialog extends Action<'ARTICLE_OPEN_MOBILE_DIALOG'> {
+  mobileDialogOpen: boolean
+}
+
+export interface ArticleCloseMobileDialog extends Action<'ARTICLE_CLOSE_MOBILE_DIALOG'> {
+  mobileDialogOpen: boolean
+}
+
+export type ArticleActions =
+  ArticleSetAll |
+  ArticleOpenMobileDialog |
+  ArticleCloseMobileDialog;
 
 export const articleSetAll = (articles: Article[]): ArticleSetAll => ({
   type: 'ARTICLE_SET_ALL',
   articles
+});
+
+export const articleOpenMobileDialog = (): ArticleOpenMobileDialog => ({
+  type: 'ARTICLE_OPEN_MOBILE_DIALOG',
+  mobileDialogOpen: true
+});
+
+export const articleCloseMobileDialog = (): ArticleCloseMobileDialog => ({
+  type: 'ARTICLE_CLOSE_MOBILE_DIALOG',
+  mobileDialogOpen: false
 });
 
 export const articleGetAllUnread: ActionCreator<
