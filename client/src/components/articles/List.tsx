@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -99,6 +99,29 @@ const ArticlesList: React.FC = () => {
     await dispatch(articleOpenMobileDialog());
   };
 
+  const moveUp = async (): Promise<void> => {
+    if (selectedArticleIndex > 0) {
+      const newIndex = selectedArticleIndex - 1;
+      await dispatch(articleSetSelectedIndex(newIndex));
+    }
+  };
+
+  const moveDown = async (): Promise<void> => {
+    if (selectedArticleIndex < articles.length - 1) {
+      const newIndex = selectedArticleIndex + 1;
+      await dispatch(articleSetSelectedIndex(newIndex));
+    }
+  };
+
+  const onKeyPressed = async (e: KeyboardEvent<HTMLUListElement>): Promise<void> => {
+    if (e.keyCode === 38) {
+      await moveUp();
+    }
+    else if (e.keyCode === 40) {
+      await moveDown();
+    }
+  };
+
   return (<Drawer
     classes={{
       paper: clsx(classes.drawerPaper, {
@@ -108,7 +131,7 @@ const ArticlesList: React.FC = () => {
     variant='permanent'
     open
   >
-    <List>
+    <List onKeyDown={onKeyPressed}>
       {articles.map((article, index) => (
         <ListItem
           key={article.id}
