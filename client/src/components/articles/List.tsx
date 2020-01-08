@@ -73,6 +73,7 @@ const ArticlesList: React.FC = () => {
   const classes = useStyles();
   const articles = useSelector((state: State) => state.article.articles) as Article[];
   const foldersDrawerOpen = useSelector((state: State) => state.folder.drawerOpen);
+  const selectedArticleIndex = useSelector((state: State) => state.article.selectedArticleIndex) as number;
 
   const handleOpenArticle = async (index: number): Promise<void> => {
     await dispatch(articleSetSelectedIndex(index));
@@ -97,7 +98,11 @@ const ArticlesList: React.FC = () => {
                 [classes.markedAsRead]: article.read
               })}
             >
-              <ListItem button onClick={() => handleOpenArticle(index)}>
+              <ListItem
+                button
+                onClick={() => handleOpenArticle(index)}
+                selected={selectedArticleIndex === index}
+              >
                 <ListItemText
                   primary={article.title}
                   secondary={<>
