@@ -1,17 +1,44 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  makeStyles,
+  Theme,
+  createStyles
+} from '@material-ui/core';
 
 import { State } from '../../store';
 import Article from '../../../../types/Article';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    articleTitle: {
+
+    },
+    articleTitleLink: {
+      textDecoration: 'none',
+      color: theme.palette.text.primary
+    },
+    pubDate: {
+      fontSize: '.9em',
+      opacity: .7,
+      marginTop: 10
+    },
+    content: {
+      marginTop: 50
     }
   })
 );
+
+const formatPubDate = (date: Date): string => new Date(date).toLocaleString('en-GB', {
+  day : 'numeric',
+  month : 'long',
+  year : 'numeric',
+  hour: '2-digit',
+  minute: '2-digit'
+});
 
 const ArticleContent: React.FC = () => {
   const classes = useStyles();
@@ -24,9 +51,27 @@ const ArticleContent: React.FC = () => {
 
   const selectedArticle = articles[selectedArticleIndex];
 
-  return (<div className={classes.root}>
-    {selectedArticle.title}
-  </div>);
+  return (<Container fixed>
+    <Typography variant='h3' className={classes.articleTitle}>
+      <a
+        href={selectedArticle.link}
+        target='_blank'
+        className={classes.articleTitleLink}
+        rel='noopener noreferrer'
+      >
+        {selectedArticle.title}
+      </a>
+    </Typography>
+
+    <div className={classes.pubDate}>
+      {formatPubDate(selectedArticle.pubDate)}
+    </div>
+
+    <div
+      className={classes.content}
+      dangerouslySetInnerHTML={{__html: selectedArticle.content}}
+    />
+  </Container>);
 }
 
 export default ArticleContent;

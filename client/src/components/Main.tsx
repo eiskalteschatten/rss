@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0, 1),
       justifyContent: 'flex-end',
       marginTop: APPBAR_HEIGHT,
-      height: `calc(100vh - ${APPBAR_HEIGHT}px)`
+      height: `calc(100vh - ${APPBAR_HEIGHT * 2}px)`
     }
   })
 );

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 1
     },
     content: {
-      padding: theme.spacing(3)
+      paddingTop: theme.spacing(3)
     }
   })
 );
