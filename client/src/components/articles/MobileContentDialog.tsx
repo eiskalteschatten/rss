@@ -13,8 +13,9 @@ import {
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
-
 import { TransitionProps } from '@material-ui/core/transitions';
+
+import ArticleContent from './Content';
 
 import { State, dispatch } from '../../store';
 import { articleCloseMobileDialog } from '../../store/actions/articleActions';
@@ -62,7 +63,7 @@ const ArticleMobileContent: React.FC = () => {
     </AppBar>
 
     <div className={classes.content}>
-      article content
+      <ArticleContent />
     </div>
   </Dialog>);
 }

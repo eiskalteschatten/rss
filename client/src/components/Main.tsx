@@ -11,7 +11,7 @@ import AppBar from './AppBar';
 import Drawer from './folders/Drawer';
 import ArticlesList from './articles/List';
 import ArticleContent from './articles/Content';
-import ArticleMobileContent from './articles/MobileContent';
+import ArticleMobileContent from './articles/MobileContentDialog';
 
 import { State } from '../store';
 
