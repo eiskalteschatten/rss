@@ -14,12 +14,19 @@ import Article from '../../../../types/Article';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    articleTitle: {
-
-    },
     articleTitleLink: {
       textDecoration: 'none',
-      color: theme.palette.text.primary
+      color: theme.palette.text.primary,
+      display: 'block',
+      [theme.breakpoints.up('sm')]: {
+        padding: 15,
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.1)'
+        },
+        '&:active': {
+          backgroundColor: 'rgba(255, 255, 255, 0.05)'
+        }
+      }
     },
     pubDate: {
       fontSize: '.9em',
@@ -27,7 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 10
     },
     content: {
-      marginTop: 50
+      marginTop: 35,
+      [theme.breakpoints.up('sm')]: {
+        padding: 15
+      }
     }
   })
 );
@@ -52,20 +62,20 @@ const ArticleContent: React.FC = () => {
   const selectedArticle = articles[selectedArticleIndex];
 
   return (<Container fixed>
-    <Typography variant='h3' className={classes.articleTitle}>
-      <a
-        href={selectedArticle.link}
-        target='_blank'
-        className={classes.articleTitleLink}
-        rel='noopener noreferrer'
-      >
+    <a
+      href={selectedArticle.link}
+      target='_blank'
+      className={classes.articleTitleLink}
+      rel='noopener noreferrer'
+    >
+      <Typography variant='h3'>
         {selectedArticle.title}
-      </a>
-    </Typography>
+      </Typography>
 
-    <div className={classes.pubDate}>
-      {formatPubDate(selectedArticle.pubDate)}
-    </div>
+      <div className={classes.pubDate}>
+        {formatPubDate(selectedArticle.pubDate)}
+      </div>
+    </a>
 
     <div
       className={classes.content}
