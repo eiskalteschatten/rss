@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
         }
       }
     },
-    pubDate: {
+    metaData: {
       fontSize: '.9em',
       opacity: .7,
       marginTop: 10
@@ -72,8 +72,9 @@ const ArticleContent: React.FC = () => {
         {selectedArticle.title}
       </Typography>
 
-      <div className={classes.pubDate}>
-        {formatPubDate(selectedArticle.pubDate)}
+      <div className={classes.metaData}>
+        {formatPubDate(selectedArticle.pubDate)}<br />
+        {selectedArticle.feed.name}
       </div>
     </a>
 

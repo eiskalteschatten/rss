@@ -1,3 +1,5 @@
+import Feed from './Feed';
+
 export default interface Article {
   id: number;
   title: string;
@@ -12,4 +14,5 @@ export default interface Article {
   fkFeed: number;
   createdAt: Date;
   updatedAt: Date;
+  feed: Feed;
 } // eslint-disable-line semi

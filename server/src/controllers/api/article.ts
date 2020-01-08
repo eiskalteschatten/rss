@@ -5,7 +5,7 @@ import { returnError } from '../../lib/apiErrorHandling';
 import Controller from '../../interfaces/Controller';
 import { HttpError } from '../../lib/Error';
 import Article from '../../models/Article';
-
+import Feed from '../../models/Feed';
 
 class ArticleController implements Controller {
   router: Router;
@@ -29,7 +29,11 @@ class ArticleController implements Controller {
       const articles = await Article.findAll({
         order: [
           ['pubDate', 'DESC']
-        ]
+        ],
+        include: [{
+          model: Feed,
+          as: 'feed'
+        }]
       });
 
       res.json({ articles });
@@ -47,7 +51,11 @@ class ArticleController implements Controller {
         },
         order: [
           ['pubDate', 'DESC']
-        ]
+        ],
+        include: [{
+          model: Feed,
+          as: 'feed'
+        }]
       });
 
       res.json({ articles });

@@ -7,6 +7,8 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemAvatar,
+  Avatar,
   makeStyles,
   Theme,
   createStyles
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
     markedAsRead: {
       opacity: .5
     },
-    pubDate: {
+    metaData: {
       display: 'block',
       fontSize: '.9em',
       opacity: .7
@@ -103,11 +105,19 @@ const ArticlesList: React.FC = () => {
                 onClick={() => handleOpenArticle(index)}
                 selected={selectedArticleIndex === index}
               >
+                {article.feed.icon &&
+                  <ListItemAvatar>
+                    <Avatar
+                      src={article.feed.icon}
+                    />
+                  </ListItemAvatar>
+                }
                 <ListItemText
                   primary={article.title}
                   secondary={<>
-                    <span className={classes.pubDate}>
-                      {formatPubDate(article.pubDate)}
+                    <span className={classes.metaData}>
+                      {formatPubDate(article.pubDate)}<br />
+                      {article.feed.name}
                     </span>
                     {article.contentSnippet.substring(0, 75)}
                   </>}
