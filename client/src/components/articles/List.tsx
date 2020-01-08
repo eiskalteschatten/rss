@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -15,7 +15,12 @@ import {
 } from '@material-ui/core';
 
 import { State, dispatch } from '../../store';
-import { articleOpenMobileDialog, articleSetSelectedIndex } from '../../store/actions/articleActions';
+
+import {
+  articleOpenMobileDialog,
+  articleSetSelectedIndex,
+  articleMarkAsRead
+} from '../../store/actions/articleActions';
 
 import Article from '../../../../types/Article';
 
@@ -52,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
       })
     },
     markedAsRead: {
-      opacity: .5
+      opacity: .6
     },
     metaData: {
       display: 'block',
@@ -82,52 +87,57 @@ const ArticlesList: React.FC = () => {
     await dispatch(articleOpenMobileDialog());
   };
 
-  return (<>
-      <Drawer
-        classes={{
-          paper: clsx(classes.drawerPaper, {
-            [classes.drawerPaperShift]: foldersDrawerOpen
-          })
-        }}
-        variant='permanent'
-        open
-      >
-        <List>
-          {articles.map((article, index) => (
-            <span
-              key={article.id}
-              className={clsx({
-                [classes.markedAsRead]: article.read
-              })}
-            >
-              <ListItem
-                button
-                onClick={() => handleOpenArticle(index)}
-                selected={selectedArticleIndex === index}
-              >
-                {article.feed.icon &&
-                  <ListItemAvatar>
-                    <Avatar
-                      src={article.feed.icon}
-                    />
-                  </ListItemAvatar>
-                }
-                <ListItemText
-                  primary={article.title}
-                  secondary={<>
-                    <span className={classes.metaData}>
-                      {formatPubDate(article.pubDate)}<br />
-                      {article.feed.name}
-                    </span>
-                    {article.contentSnippet.substring(0, 75)}
-                  </>}
-                />
-              </ListItem>
-            </span>
-          ))}
-        </List>
-      </Drawer>
-  </>);
+  useEffect(() => {
+    const selectedArticle = selectedArticleIndex !== undefined && selectedArticleIndex !== null
+    ? articles[selectedArticleIndex]
+    : undefined;
+
+    if (selectedArticle && !selectedArticle.read) {
+      dispatch(articleMarkAsRead(selectedArticle.id));
+    }
+  }, [selectedArticleIndex, articles]);
+
+  return (<Drawer
+    classes={{
+      paper: clsx(classes.drawerPaper, {
+        [classes.drawerPaperShift]: foldersDrawerOpen
+      })
+    }}
+    variant='permanent'
+    open
+  >
+    <List>
+      {articles.map((article, index) => (
+        <ListItem
+          key={article.id}
+          button
+          onClick={() => handleOpenArticle(index)}
+          selected={selectedArticleIndex === index}
+          className={clsx({
+            [classes.markedAsRead]: article.read
+          })}
+        >
+          {article.feed.icon &&
+            <ListItemAvatar>
+              <Avatar
+                src={article.feed.icon}
+              />
+            </ListItemAvatar>
+          }
+          <ListItemText
+            primary={article.title}
+            secondary={<>
+              <span className={classes.metaData}>
+                {formatPubDate(article.pubDate)}<br />
+                {article.feed.name}
+              </span>
+              {article.contentSnippet.substring(0, 75)}
+            </>}
+          />
+        </ListItem>
+      ))}
+    </List>
+  </Drawer>);
 }
 
 export default ArticlesList;

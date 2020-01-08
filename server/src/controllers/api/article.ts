@@ -20,6 +20,7 @@ class ArticleController implements Controller {
     this.router.get('/unread', this.getAllUnreadArticles);
     this.router.post('/', this.createArticle);
     this.router.patch('/mark-all-read', this.markAllAsRead);
+    this.router.patch('/mark-as-read/:id', this.markArticleAsRead);
     this.router.patch('/:id', this.updateArticle);
     this.router.delete('/:id', this.deleteArticle);
   }
@@ -79,10 +80,11 @@ class ArticleController implements Controller {
   private async markAllAsRead(req: Request, res: Response): Promise<void> {
     try {
       await Article.update({
-        markedAsRead: true
+        read: true,
+        markedAsReadAt: new Date()
       }, {
         where: {
-          markedAsRead: false
+          read: false
         }
       });
 
@@ -95,9 +97,35 @@ class ArticleController implements Controller {
 
   private async updateArticle(req: Request, res: Response): Promise<void> {
     try {
-      const article = await Article.findByPk(req.params.id);
+      const article = await Article.findByPk(req.params.id, {
+        include: [{
+          model: Feed,
+          as: 'feed'
+        }]
+      });
 
       await article.update(req.body);
+
+      res.json({ article });
+    }
+    catch(error) {
+      returnError(error as HttpError, res);
+    }
+  }
+
+  private async markArticleAsRead(req: Request, res: Response): Promise<void> {
+    try {
+      const article = await Article.findByPk(req.params.id, {
+        include: [{
+          model: Feed,
+          as: 'feed'
+        }]
+      });
+
+      await article.update({
+        read: true,
+        markedAsReadAt: new Date()
+      });
 
       res.json({ article });
     }

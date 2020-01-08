@@ -63,7 +63,7 @@ Article.init({
     field: 'marked_as_read_at',
     set(value: Date | string): void {
       const setValue = typeof value === 'string' ? new Date(value) : value;
-      this.setDataValue('markedAsRead', setValue);
+      this.setDataValue('markedAsReadAt', setValue);
     }
   },
   fkFeed: {

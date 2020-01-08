@@ -55,7 +55,7 @@ export const articleGetAllUnread: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (articles: Article[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
   dispatch(appSetFormError(''));
 
@@ -64,7 +64,7 @@ export const articleGetAllUnread: ActionCreator<
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while fetching all articles.'));
+    dispatch(appSetFormError('An error occurred while fetching all unread articles.'));
     console.error(error);
   }
 
@@ -78,7 +78,7 @@ export const articleRefreshAndGetAllUnread: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (articles: Article[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
   dispatch(appSetFormError(''));
 
@@ -88,7 +88,7 @@ export const articleRefreshAndGetAllUnread: ActionCreator<
     dispatch(articleSetAll(res.data.articles));
   }
   catch (error) {
-    dispatch(appSetFormError('An error occurred while fetching all articles.'));
+    dispatch(appSetFormError('An error occurred while refreshing fetching all unread articles.'));
     console.error(error);
   }
 
@@ -102,7 +102,7 @@ export const articleGetAll: ActionCreator<
     null,
     AppStopLoadingAction
   >
-> = (articles: Article[]): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
   dispatch(appSetFormError(''));
 
@@ -112,6 +112,38 @@ export const articleGetAll: ActionCreator<
   }
   catch (error) {
     dispatch(appSetFormError('An error occurred while fetching all articles.'));
+    console.error(error);
+  }
+
+  return dispatch(appStopLoading());
+};
+
+export const articleMarkAsRead: ActionCreator<
+  ThunkAction<
+    Promise<AppStopLoadingAction>,
+    null,
+    null,
+    AppStopLoadingAction
+  >
+> = (id: number): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+  dispatch(appStartLoading());
+  dispatch(appSetFormError(''));
+
+  try {
+    const res: any = await axios.patch(`/api/article/mark-as-read/${id}`);
+
+    const state = getState();
+    const articles = state.article.articles;
+    const selectedArticleIndex = state.article.selectedArticleIndex;
+
+    if (selectedArticleIndex !== undefined && selectedArticleIndex !== null) {
+      articles[selectedArticleIndex] = res.data.article;
+    }
+
+    dispatch(articleSetAll(articles));
+  }
+  catch (error) {
+    dispatch(appSetFormError('An error occurred while marking an article as read.'));
     console.error(error);
   }
 
