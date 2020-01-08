@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 
@@ -19,7 +19,7 @@ import { State, dispatch } from '../../store';
 import {
   articleOpenMobileDialog,
   articleSetSelectedIndex,
-  articleMarkAsRead
+  articleMarkReadUnread
 } from '../../store/actions/articleActions';
 
 import Article from '../../../../types/Article';
@@ -81,21 +81,23 @@ const ArticlesList: React.FC = () => {
   const articles = useSelector((state: State) => state.article.articles) as Article[];
   const foldersDrawerOpen = useSelector((state: State) => state.folder.drawerOpen);
   const selectedArticleIndex = useSelector((state: State) => state.article.selectedArticleIndex) as number;
+  const [selectedArticleId, setSelectedArticleId] = useState<number>();
+
+  useEffect(() => {
+    const article = articles[selectedArticleIndex];
+    setSelectedArticleId(article && article.id);
+  }, [selectedArticleIndex, articles]);
+
+  useEffect(() => {
+    if (selectedArticleId) {
+      dispatch(articleMarkReadUnread(selectedArticleId, true));
+    }
+  }, [selectedArticleId]);
 
   const handleOpenArticle = async (index: number): Promise<void> => {
     await dispatch(articleSetSelectedIndex(index));
     await dispatch(articleOpenMobileDialog());
   };
-
-  useEffect(() => {
-    const selectedArticle = selectedArticleIndex !== undefined && selectedArticleIndex !== null
-    ? articles[selectedArticleIndex]
-    : undefined;
-
-    if (selectedArticle && !selectedArticle.read) {
-      dispatch(articleMarkAsRead(selectedArticle.id));
-    }
-  }, [selectedArticleIndex, articles]);
 
   return (<Drawer
     classes={{
@@ -117,7 +119,7 @@ const ArticlesList: React.FC = () => {
             [classes.markedAsRead]: article.read
           })}
         >
-          {article.feed.icon &&
+          {article.feed && article.feed.icon &&
             <ListItemAvatar>
               <Avatar
                 src={article.feed.icon}
@@ -129,7 +131,7 @@ const ArticlesList: React.FC = () => {
             secondary={<>
               <span className={classes.metaData}>
                 {formatPubDate(article.pubDate)}<br />
-                {article.feed.name}
+                {article.feed && article.feed.name}
               </span>
               {article.contentSnippet.substring(0, 75)}
             </>}

@@ -118,19 +118,19 @@ export const articleGetAll: ActionCreator<
   return dispatch(appStopLoading());
 };
 
-export const articleMarkAsRead: ActionCreator<
+export const articleMarkReadUnread: ActionCreator<
   ThunkAction<
     Promise<AppStopLoadingAction>,
     null,
     null,
     AppStopLoadingAction
   >
-> = (id: number): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
+> = (id: number, read: boolean): any => async (dispatch: Dispatch, getState: any): Promise<AppStopLoadingAction> => {
   dispatch(appStartLoading());
   dispatch(appSetFormError(''));
 
   try {
-    const res: any = await axios.patch(`/api/article/mark-as-read/${id}`);
+    const res: any = await axios.patch(`/api/article/mark-read-unread/${id}`, { read });
 
     const state = getState();
     const articles = state.article.articles;

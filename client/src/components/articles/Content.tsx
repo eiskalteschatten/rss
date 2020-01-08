@@ -13,7 +13,9 @@ import {
 
 import MarkunreadIcon from '@material-ui/icons/Markunread';
 
-import { State } from '../../store';
+import { State, dispatch } from '../../store';
+import { articleMarkReadUnread } from '../../store/actions/articleActions';
+
 import Article from '../../../../types/Article';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,14 +70,16 @@ const ArticleContent: React.FC = () => {
     return <div />;
   }
 
+  const handleMarkReadUnread = (read: boolean) => dispatch(articleMarkReadUnread(selectedArticle.id, read));
+
   return (<Container fixed>
     <Toolbar disableGutters>
       {selectedArticle.read ? (
-        <Button startIcon={<MarkunreadIcon />}>
+        <Button startIcon={<MarkunreadIcon />} onClick={() => handleMarkReadUnread(false)}>
           Mark as Unread
         </Button>
       ) : (
-        <Button startIcon={<MarkunreadIcon />}>
+        <Button startIcon={<MarkunreadIcon />}  onClick={() => handleMarkReadUnread(true)}>
           Mark as Read
         </Button>
       )}
@@ -93,7 +97,7 @@ const ArticleContent: React.FC = () => {
 
       <div className={classes.metaData}>
         {formatPubDate(selectedArticle.pubDate)}<br />
-        {selectedArticle.feed.name}
+        {selectedArticle.feed && selectedArticle.feed.name}
       </div>
     </a>
 
