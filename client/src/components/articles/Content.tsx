@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 
 import MarkunreadIcon from '@material-ui/icons/Markunread';
+import MarkunreadOutlinedIcon from '@material-ui/icons/MarkunreadOutlined';
 
 import { State, dispatch } from '../../store';
 import { articleMarkReadUnread } from '../../store/actions/articleActions';
@@ -79,7 +80,7 @@ const ArticleContent: React.FC = () => {
           Mark as Unread
         </Button>
       ) : (
-        <Button startIcon={<MarkunreadIcon />}  onClick={() => handleMarkReadUnread(true)}>
+        <Button startIcon={<MarkunreadOutlinedIcon />}  onClick={() => handleMarkReadUnread(true)}>
           Mark as Read
         </Button>
       )}
