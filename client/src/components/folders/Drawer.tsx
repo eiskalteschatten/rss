@@ -122,7 +122,7 @@ const FoldersDrawer: React.FC = () => {
     <Divider />
 
     <List>
-    <ListItem button>
+      <ListItem button>
         <ListItemIcon>
           <RssFeedIcon />
         </ListItemIcon>
